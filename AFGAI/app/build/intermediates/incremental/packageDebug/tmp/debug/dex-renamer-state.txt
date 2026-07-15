@@ -1,0 +1,7 @@
+#Wed Jul 08 19:23:57 GMT 2026
+base.0=/data/data/com.termux/files/home/AFG-AI/AFGAI/app/build/intermediates/dex/debug/mergeProjectDexDebug/0/classes.dex
+base.1=/data/data/com.termux/files/home/AFG-AI/AFGAI/app/build/intermediates/dex/debug/mergeProjectDexDebug/2/classes.dex
+path.0=0/classes.dex
+path.1=2/classes.dex
+renamed.0=classes.dex
+renamed.1=classes2.dex

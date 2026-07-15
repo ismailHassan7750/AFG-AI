@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="ps">
+<head>
+<meta charset="UTF-8">
+<title>AFG AI</title>
+
+<style>
+body{
+    margin:0;
+    background:#111;
+    color:white;
+    font-family:Arial;
+}
+
+.header{
+    background:#222;
+    padding:15px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.menu-btn{
+    font-size:25px;
+    cursor:pointer;
+}
+
+.sidebar{
+    position:fixed;
+    left:-260px;
+    top:0;
+    width:260px;
+    height:100%;
+    background:#222;
+    padding-top:60px;
+    transition:0.3s;
+}
+
+.sidebar a{
+    display:block;
+    color:white;
+    padding:15px;
+    text-decoration:none;
+}
+
+.sidebar a:hover{
+    background:#333;
+}
+
+.chat{
+    padding:15px;
+    height:65vh;
+    overflow:auto;
+}
+
+.ai{
+    background:#333;
+    padding:10px;
+    border-radius:15px;
+    margin:10px 0;
+}
+
+.user{
+    background:#0066ff;
+    padding:10px;
+    border-radius:15px;
+    margin:10px 0;
+    text-align:right;
+}
+
+.input{
+    display:flex;
+    padding:10px;
+    background:#222;
+}
+
+input{
+    flex:1;
+    padding:12px;
+    border-radius:10px;
+    border:0;
+}
+
+button{
+    padding:10px;
+    margin-left:5px;
+    border-radius:10px;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="sidebar" id="menu">
+<a>👤 Profile<br>Ismail Hassan</a>
+<a>📜 Chat History</a>
+<a>⚙️ Settings</a>
+<a>🌙 Dark Mode: Active</a>
+<a>💳 Free Plan</a>
+</div>
+
+
+<div class="header">
+<span class="menu-btn" onclick="openMenu()">☰</span>
+<span>🤖 AFG AI</span>
+</div>
+
+
+<div class="chat" id="chat">
+
+<div class="ai">
+سلام 👋 زه AFG AI یم.<br>
+د اسماعیل حسن لخوا جوړ شوی یم.
+</div>
+
+</div>
+
+
+<div class="input">
+
+<input id="msg" placeholder="پیغام ولیکه">
+
+<button onclick="send()">➤</button>
+
+</div>
+
+
+<script>
+
+function openMenu(){
+let m=document.getElementById("menu");
+
+if(m.style.left=="0px"){
+m.style.left="-260px";
+}else{
+m.style.left="0px";
+}
+
+}
+
+
+function send(){
+
+let text=document.getElementById("msg").value;
+
+if(text=="") return;
+
+let chat=document.getElementById("chat");
+
+chat.innerHTML +=
+'<div class="user">'+text+'</div>';
+
+chat.innerHTML +=
+'<div class="ai">🤖 AFG AI: ستا پیغام مې واورېد: '+text+'</div>';
+
+document.getElementById("msg").value="";
+
+}
+
+</script>
+
+</body>
+</html>

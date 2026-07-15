@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="ps">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>AFG AI</title>
+
+<style>
+
+body{
+margin:0;
+font-family:Arial,sans-serif;
+background:white;
+color:#111;
+}
+
+
+/* Menu */
+
+.sidebar{
+position:fixed;
+top:0;
+left:-260px;
+width:240px;
+height:100%;
+background:white;
+padding:15px;
+box-shadow:0 0 10px #ccc;
+transition:.3s;
+z-index:10;
+}
+
+.sidebar.open{
+left:0;
+}
+
+.sidebar button{
+width:100%;
+padding:12px;
+margin:6px 0;
+border-radius:10px;
+border:1px solid #ddd;
+background:#f5f5f5;
+font-size:15px;
+}
+
+
+/* Header */
+
+.header{
+text-align:center;
+padding:10px;
+}
+
+.bot-logo{
+width:55px;
+height:55px;
+border-radius:50%;
+object-fit:cover;
+}
+
+.header h1{
+font-size:22px;
+margin:5px;
+}
+
+.header p{
+font-size:13px;
+margin:2px;
+}
+
+
+/* Menu button */
+
+.menu-btn{
+font-size:30px;
+padding:10px;
+cursor:pointer;
+}
+
+
+/* Chat */
+
+.chat{
+margin:10px;
+height:60vh;
+background:#f5f5f5;
+border-radius:15px;
+padding:15px;
+overflow:auto;
+}
+
+
+/* Bottom */
+
+.bottom{
+position:fixed;
+bottom:10px;
+left:10px;
+right:10px;
+display:flex;
+gap:5px;
+}
+
+
+textarea{
+flex:1;
+height:40px;
+border-radius:10px;
+padding:10px;
+border:1px solid #ccc;
+}
+
+
+.btn{
+border:0;
+background:#111;
+color:white;
+border-radius:10px;
+padding:10px;
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="sidebar" id="menu">
+
+<h2>AFG AI</h2>
+
+<button>➕ New Chat</button>
+
+<button>🕘 History</button>
+
+<button>👤 Profile</button>
+
+<button>🌐 Translate</button>
+
+<button>⚙️ Settings</button>
+
+<button onclick="window.open('https://www.facebook.com/jan878410')">
+📘 Facebook Page
+</button>
+
+<button onclick="window.open('https://wa.me/93787845610')">
+📱 WhatsApp +93 787845610
+</button>
+
+<p>
+Ismail Hasan
+</p>
+
+</div>
+
+
+
+<div class="menu-btn" onclick="openMenu()">
+☰
+</div>
+
+
+<div class="header">
+
+<img src="bot.png" class="bot-logo">
+
+<h1>AFG AI</h1>
+
+<p>Ismail Hasan</p>
+
+</div>
+
+
+<div class="chat" id="chat">
+
+</div>
+
+
+<div class="bottom">
+
+<textarea id="msg" placeholder="پیغام ولیکه..."></textarea>
+
+<button class="btn" onclick="voice()">🎤</button>
+
+<button class="btn" onclick="image()">🖼️</button>
+
+<button class="btn" onclick="send()">➤</button>
+
+</div>
+
+<script>
+
+function openMenu(){
+
+document.getElementById("menu").classList.toggle("open");
+
+}
+async function send() {
+
+let box = document.getElementById("msg");
+let chat = document.getElementById("chat");
+
+let msg = box.value.trim();
+
+if(msg=="") return;
+
+chat.innerHTML += "<p><b>ته:</b> " + msg + "</p>";
+box.value="";
+
+try{
+
+let res = await fetch("http://10.162.19.95:5000/chat",{
+method:"POST",
+headers:{
+"Content-Type":"application/json"
+},
+body:JSON.stringify({
+message:msg,
+owner_key:"AFG_ISMAIL_OWNER_2026"
+})
+});
+
+let data = await res.json();
+
+chat.innerHTML += "<p><b>AFG AI:</b> " + data.reply + "</p>";
+
+}catch(e){
+
+chat.innerHTML += "<p style='color:red'><b>خطا:</b> API سره اړیکه ونشوه.</p>";
+
+}
+
+chat.scrollTop = chat.scrollHeight;
+
+}
+
+
+function image(){
+
+let input = document.createElement("input");
+
+input.type = "file";
+input.accept = "image/*";
+
+
+input.onchange = function(){
+
+let chat = document.getElementById("chat");
+
+let img = document.createElement("img");
+
+img.src = URL.createObjectURL(this.files[0]);
+
+img.style.width = "200px";
+img.style.borderRadius = "12px";
+img.style.margin = "10px";
+
+
+chat.appendChild(img);
+
+chat.scrollTop = chat.scrollHeight;
+
+};
+
+
+input.click();
+
+}
+
+
+
+
+function voice(){
+
+let SpeechRecognition =
+window.SpeechRecognition || window.webkitSpeechRecognition;
+
+
+if(!SpeechRecognition){
+
+alert("Voice ملاتړ نه کوي");
+
+return;
+
+}
+
+
+let rec = new SpeechRecognition();
+
+
+rec.lang = "ps-AF";
+
+rec.continuous = false;
+
+rec.interimResults = false;
+
+
+rec.onstart = function(){
+
+console.log("Voice start");
+
+};
+
+
+rec.onresult = function(event){
+
+document.getElementById("msg").value =
+event.results[0][0].transcript;
+
+};
+
+
+rec.onerror = function(){
+
+alert("Voice error");
+
+};
+
+
+rec.start();
+
+}
+
+</script>
+</script>
+
+</body>
+</html>

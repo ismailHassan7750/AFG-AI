@@ -1,0 +1,6 @@
+cd ~
+mkdir AFG-AI
+cd AFG-AI
+mkdir templates
+touch main.py
+touch templates/index.html
