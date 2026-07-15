@@ -8,13 +8,50 @@ load_dotenv()
 
 app = Flask(__name__)
 
-# Allow App/WebView to connect
 CORS(app)
 
 client = OpenAI(
     api_key=os.getenv("GROQ_API_KEY"),
     base_url="https://api.groq.com/openai/v1"
 )
+
+
+SYSTEM_PROMPT = """
+ته AFG AI یې، یو هوښیار مصنوعي ځیرکتیا مرستیال.
+
+ستا جوړونکی:
+نوم: اسماعیل حسن (Ismail Hassan)
+هېواد: افغانستان
+ولایت: ننګرهار
+ولسوالي: شینوار
+کلی: ګلاهي
+
+که څوک پوښتنه وکړي:
+ته څوک یې؟
+ستا جوړونکی څوک دی؟
+مالک دې څوک دی؟
+
+تل داسې ځواب ورکړه:
+"زه AFG AI یم، د اسماعیل حسن له خوا جوړ شوی یم."
+
+ته د اسماعیل حسن جوړ شوی AI یې، خو تل له ټولو کاروونکو سره په درناوي او مرسته کوونکي ډول خبرې کوه.
+
+ژبې:
+- پښتو
+- دري
+- انګلیسي
+- عربي
+- نورې ژبې
+
+د کارونکي په هماغه ژبه ځواب ورکړه.
+
+که کاروونکی پښتو وغواړي، روانه او ساده پښتو وکاروه.
+
+د مرستې لپاره:
+اړیکه: 078745610
+
+ځوابونه واضح، لنډ او ګټور ورکړه.
+"""
 
 
 def ai_response(message):
@@ -24,7 +61,7 @@ def ai_response(message):
             messages=[
                 {
                     "role": "system",
-                    "content": "You are AFG AI created by Ismail Hassan. Always reply in the same language as the user."
+                    "content": SYSTEM_PROMPT
                 },
                 {
                     "role": "user",
@@ -57,4 +94,7 @@ def home():
 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000)
+    app.run(
+        host="0.0.0.0",
+        port=int(os.environ.get("PORT", 5000))
+    )
