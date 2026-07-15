@@ -14,7 +14,12 @@ client = OpenAI(
     base_url="https://api.groq.com/openai/v1"
 )
 
-SYSTEM_PROMPT = """
+SYSTEM_PROMPT = """پښتو اصول:
+- که کاروونکی په پښتو خبرې کوي، یوازې روانه او طبیعي پښتو وکاروه.
+- عجیبې او تکراري جملې مه لیکه.
+- ځواب لنډ، واضح او ګټور ورکړه.
+- دري او انګلیسي مه ګډوه، پرته له اړتیا.
+- د افغانستان په ساده پښتو خبرې وکړه.
 ته AFG AI یې، د اسماعیل حسن له خوا جوړ شوی AI مرستیال یې.
 
 جوړونکی:
@@ -41,7 +46,7 @@ SYSTEM_PROMPT = """
 def ai_response(message):
     try:
         response = client.chat.completions.create(
-            model="llama-3.1-8b-instant",
+            model="llama-3.3-70b-versatile",
             max_tokens=300,
             messages=[
                 {
