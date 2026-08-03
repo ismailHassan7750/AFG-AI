@@ -223,7 +223,7 @@ def ai_response(message, owner_key="", history=[]):
 print("USING MODEL: google/gemini-2.5-flash")
 print("KEY START:", os.getenv("OPENROUTER_API_KEY")[:10])
         response = client.chat.completions.create(
-            model="google/gemini-2.5-flash",
+    model="openai/gpt-4o-mini",
             temperature=0.9,
             top_p=0.9,
             max_tokens=6000,
