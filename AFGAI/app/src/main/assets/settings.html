@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ps">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Settings - AFG AI</title>
+
+<style>
+body{
+font-family:Arial;
+margin:0;
+padding:20px;
+background:#eef3f7;
+color:#111;
+}
+
+h1{
+text-align:center;
+}
+button{
+width:100%;
+padding:16px;
+margin:12px 0;
+border:none;
+border-radius:20px;
+font-size:18px;
+text-align:left;
+background:white;
+color:#111;
+box-shadow:0 4px 12px rgba(0,0,0,.12);
+cursor:pointer;
+}
+
+button:active{
+transform:scale(.97);
+}
+
+.back{
+background:#333;
+color:white;
+}
+</style>
+
+</head>
+
+<body>
+
+<h1>⚙️ Settings</h1>
+
+<button onclick="showMemory()">🧠 AI Memory</button>
+
+<button onclick="showFavorites()">⭐ Favorites</button>
+
+<button onclick="showSaved()">📌 Saved Answers</button>
+
+<button onclick="showFiles()">📂 My Files</button>
+
+<button onclick="showTheme()">🎨 Theme</button>
+
+<button onclick="showNotifications()">🔔 Notifications</button>
+
+<button onclick="showLanguages()">🌍 Languages</button>
+
+<button onclick="showImageAI()">📷 Image AI</button>
+
+<button onclick="showPremium()">💎 Premium / Payments</button>
+
+<button class="back" onclick="history.back()">
+⬅️ Back
+</button>
+
+<script src="features.js"></script>
+
+</body>
+</html>

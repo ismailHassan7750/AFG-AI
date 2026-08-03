@@ -8,7 +8,7 @@ import requests
 app = Flask(__name__)
 
 # خپل مالک Key دلته بدل کړه
-OWNER_KEY = "."
+OWNER_KEY = "AFG_ISMAIL_OWNER_2026"
 
 
 AI_INFO = """

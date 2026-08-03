@@ -110,6 +110,8 @@ body{
     border-radius:16px;
     margin-bottom:12px;
     word-wrap:break-word;
+    white-space:pre-wrap;
+    overflow-wrap:break-word;
 }
 
 .ai-message{

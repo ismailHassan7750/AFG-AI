@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>Create Account</h2>
+
+<input id="email" placeholder="Email">
+<br><br>
+
+<input id="password" type="password" placeholder="Password">
+<br><br>
+
+<button onclick="register()">Register</button>
+
+<script>
+function register(){
+
+let email = document.getElementById("email").value;
+
+localStorage.setItem("afg_user_id", email);
+
+document.querySelector("button").disabled = true;
+
+setTimeout(function(){
+
+window.location.replace("index.html");
+
+}, 200);
+
+}
+
+</script>
+
+</body>
+</html>

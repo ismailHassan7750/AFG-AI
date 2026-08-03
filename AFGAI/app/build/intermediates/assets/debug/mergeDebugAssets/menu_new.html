@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="ps">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>AFG AI</title>
+
+<style>
+
+body{
+margin:0;
+font-family:Arial;
+background:#fff;
+}
+
+/* Menu Button */
+
+.menu-btn{
+position:fixed;
+top:15px;
+left:15px;
+font-size:30px;
+border:none;
+background:none;
+z-index:1000;
+}
+
+
+/* Sidebar */
+
+.sidebar{
+
+position:fixed;
+top:0;
+left:-280px;
+
+width:260px;
+height:100%;
+
+background-image:
+linear-gradient(
+rgba(0,0,0,.55),
+rgba(0,0,0,.75)
+),
+url("mosque.jpg");
+
+background-size:cover;
+background-position:center;
+
+color:white;
+
+padding:20px;
+
+transition:.3s;
+
+z-index:999;
+
+overflow:auto;
+}
+
+
+.sidebar.open{
+left:0;
+}
+
+
+.profile{
+text-align:center;
+font-size:20px;
+margin-bottom:20px;
+}
+
+
+.sidebar button{
+
+width:100%;
+padding:12px;
+
+margin:5px 0;
+
+border:none;
+border-radius:10px;
+
+background:rgba(255,255,255,.15);
+
+color:white;
+
+font-size:16px;
+
+}
+
+
+/* Home */
+
+.home{
+
+padding-top:80px;
+text-align:center;
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<button class="menu-btn" onclick="openMenu()">
+☰
+</button>
+
+
+<div id="menu" class="sidebar">
+
+
+<div class="profile">
+Ismail Hasan
+</div>
+
+
+<button>💬 Chat</button>
+<button>🕘 History</button>
+
+<button>🧠 AI Memory</button>
+<button>⭐ Favorites</button>
+<button>📌 Saved Answers</button>
+<button>📂 My Files</button>
+
+<button>👤 Profile</button>
+<button>🔑 Login</button>
+<button>⚙️ Settings</button>
+
+<button>🎨 Theme</button>
+<button>🔔 Notifications</button>
+<button>🌍 Languages</button>
+
+<button>📷 Image AI</button>
+
+
+<button>💎 Premium</button>
+<button>💰 Payments</button>
+
+
+<button>📘 Facebook Page</button>
+
+<button>📱 WhatsApp
++93 787845610
+</button>
+
+<button>ℹ️ About Me</button>
+
+
+</div>
+
+
+
+<div class="home">
+
+<h1>AFG AI</h1>
+
+<p>ستاسو هوښیار مرستیال</p>
+
+</div>
+
+
+
+<script>
+
+function openMenu(){
+
+document.getElementById("menu")
+.classList.toggle("open");
+
+}
+
+</script>
+
+
+</body>
+</html>

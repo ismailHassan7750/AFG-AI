@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+
+body{
+    margin:0;
+    height:100vh;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    font-family:Arial;
+    background:white;
+}
+
+.logo{
+    font-size:38px;
+    font-weight:bold;
+    margin-bottom:40px;
+}
+
+button{
+    width:85%;
+    max-width:350px;
+    padding:18px;
+    margin:10px;
+    border-radius:30px;
+    border:none;
+    font-size:18px;
+    background:#111;
+    color:white;
+}
+
+.terms{
+    margin-top:30px;
+    color:#777;
+    font-size:14px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="logo">
+🤖<br>
+AFG AI
+</div>
+
+
+<button onclick="googleLogin()">
+🌐 Continue with Google
+</button>
+
+
+<button onclick="showEmailLogin()">
+✉️ Sign in with Email
+</button>
+
+
+<button onclick="createAccount()">
+🆕 Create Account
+</button>
+
+
+<div class="terms">
+I agree to AFG AI Terms & Privacy Policy
+</div>
+
+
+<script>
+
+function googleLogin(){
+
+if(window.Android){
+    Android.googleLogin();
+}
+
+}
+
+function createAccount(){
+
+window.location.href="signup.html";
+
+}
+
+
+function createAccount(){
+
+window.location.href="index.html";
+
+}
+
+</script>
+
+
+</body>
+</html>

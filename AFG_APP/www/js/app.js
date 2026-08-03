@@ -103,7 +103,7 @@ async function askAI(text){
     try{
 
         let response = await fetch(
-            "http://YOUR_SERVER_IP:5000/chat",
+            "https://afg-ai-b225.onbelmo.uk/chat",
             {
                 method:"POST",
                 headers:{

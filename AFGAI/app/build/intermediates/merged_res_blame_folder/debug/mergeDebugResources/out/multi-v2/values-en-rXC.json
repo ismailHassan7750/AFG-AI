@@ -1,0 +1,53 @@
+{
+    "logs": [
+        {
+            "outputFile": "com.afgai.app-mergeDebugResources-19:/values-en-rXC/values-en-rXC.xml",
+            "map": [
+                {
+                    "source": "/data/data/com.termux/files/home/.gradle/caches/transforms-4/7755b8fe431b7117bb9fef47dc0f54b2/transformed/core-1.8.0/res/values-en-rXC/values-en-rXC.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "203",
+                        "endOffsets": "254"
+                    },
+                    "to": {
+                        "startLines": "8",
+                        "startColumns": "4",
+                        "startOffsets": "1298",
+                        "endColumns": "203",
+                        "endOffsets": "1497"
+                    }
+                },
+                {
+                    "source": "/data/data/com.termux/files/home/.gradle/caches/transforms-4/0b3530974550541bca2b35c0c8d5e35c/transformed/jetified-credentials-1.2.0-rc01/res/values-en-rXC/values-en-rXC.xml",
+                    "from": {
+                        "startLines": "2,3",
+                        "startColumns": "4,4",
+                        "startOffsets": "55,270",
+                        "endColumns": "214,215",
+                        "endOffsets": "265,481"
+                    }
+                },
+                {
+                    "source": "/data/data/com.termux/files/home/.gradle/caches/transforms-4/a01ef3f5b73b64283752bcfd5d43c3a0/transformed/browser-1.4.0/res/values-en-rXC/values-en-rXC.xml",
+                    "from": {
+                        "startLines": "2,3,4,5",
+                        "startColumns": "4,4,4,4",
+                        "startOffsets": "55,255,454,665",
+                        "endColumns": "199,198,210,201",
+                        "endOffsets": "250,449,660,862"
+                    },
+                    "to": {
+                        "startLines": "4,5,6,7",
+                        "startColumns": "4,4,4,4",
+                        "startOffsets": "486,686,885,1096",
+                        "endColumns": "199,198,210,201",
+                        "endOffsets": "681,880,1091,1293"
+                    }
+                }
+            ]
+        }
+    ]
+}
