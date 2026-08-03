@@ -218,12 +218,14 @@ def ai_response(message, owner_key="", history=[]):
         messages = build_messages(
             system_prompt,
             saved_chat,
-            message
+                    message
         )
-print("USING MODEL: google/gemini-2.5-flash")
-print("KEY START:", os.getenv("OPENROUTER_API_KEY")[:10])
+
+        print("USING MODEL: google/gemini-2.5-flash")
+        print("KEY START:", os.getenv("OPENROUTER_API_KEY")[:10])
+
         response = client.chat.completions.create(
-    model="openai/gpt-4o-mini",
+            model="openai/gpt-4o-mini",
             temperature=0.9,
             top_p=0.9,
             max_tokens=6000,
