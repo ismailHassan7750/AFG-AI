@@ -2,14 +2,11 @@ import os
 import json
 
 MEMORY_DIR = "memories"
-
 os.makedirs(MEMORY_DIR, exist_ok=True)
-
 
 def chat_file(owner_key):
     if not owner_key:
         owner_key = "guest"
-
     return os.path.join(MEMORY_DIR, f"{owner_key}_chat.json")
 
 def load_chat(owner_key):
@@ -22,17 +19,15 @@ def load_chat(owner_key):
         with open(file, "r", encoding="utf-8") as f:
             data = json.load(f)
 
-            if isinstance(data, list):
-                return data
+        if isinstance(data, list):
+            return data
 
-            if isinstance(data, dict) and "memories" in data:
-                return data["memories"]
+        if isinstance(data, dict) and "memories" in data:
+            return data["memories"]
 
-            return []
-
+        return []
     except:
         return []
-
 
 def save_chat(owner_key, user, ai):
     history = load_chat(owner_key)
@@ -73,7 +68,7 @@ def build_messages(system_prompt, history, message):
                     "content": ai_text
                 })
 
-messages.append({
+    messages.append({
         "role": "user",
         "content": message
     })
