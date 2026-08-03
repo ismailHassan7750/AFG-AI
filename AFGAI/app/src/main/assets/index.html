@@ -311,93 +311,9 @@ transform:scale(.97);
 
 </style>
 
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js">
-
-const plusBtn=document.getElementById("plusBtn");
-const plusMenu=document.getElementById("plusMenu");
-
-if(plusBtn && plusMenu){
-
-plusBtn.onclick=function(){
-
-if(plusMenu.style.display==="block"){
-    plusMenu.style.display="none";
-}else{
-    plusMenu.style.display="block";
-}
-
-};
-
-document.addEventListener("click",function(e){
-
-if(!plusBtn.contains(e.target) && !plusMenu.contains(e.target)){
-    plusMenu.style.display="none";
-}
-
-});
-
-}
-
-
-</script>
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js">
-
-const plusBtn=document.getElementById("plusBtn");
-const plusMenu=document.getElementById("plusMenu");
-
-if(plusBtn && plusMenu){
-
-plusBtn.onclick=function(){
-
-if(plusMenu.style.display==="block"){
-    plusMenu.style.display="none";
-}else{
-    plusMenu.style.display="block";
-}
-
-};
-
-document.addEventListener("click",function(e){
-
-if(!plusBtn.contains(e.target) && !plusMenu.contains(e.target)){
-    plusMenu.style.display="none";
-}
-
-});
-
-}
-
-
-</script>
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js">
-
-const plusBtn=document.getElementById("plusBtn");
-const plusMenu=document.getElementById("plusMenu");
-
-if(plusBtn && plusMenu){
-
-plusBtn.onclick=function(){
-
-if(plusMenu.style.display==="block"){
-    plusMenu.style.display="none";
-}else{
-    plusMenu.style.display="block";
-}
-
-};
-
-document.addEventListener("click",function(e){
-
-if(!plusBtn.contains(e.target) && !plusMenu.contains(e.target)){
-    plusMenu.style.display="none";
-}
-
-});
-
-}
-
-
-</script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 <script>
 
 const firebaseConfig = {
@@ -414,64 +330,8 @@ firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const db = firebase.firestore();
 
-
-
-const plusBtn=document.getElementById("plusBtn");
-const plusMenu=document.getElementById("plusMenu");
-
-if(plusBtn && plusMenu){
-
-plusBtn.onclick=function(){
-
-if(plusMenu.style.display==="block"){
-    plusMenu.style.display="none";
-}else{
-    plusMenu.style.display="block";
-}
-
-};
-
-document.addEventListener("click",function(e){
-
-if(!plusBtn.contains(e.target) && !plusMenu.contains(e.target)){
-    plusMenu.style.display="none";
-}
-
-});
-
-}
-
-
 </script>
-<script src="features.js">
-
-const plusBtn=document.getElementById("plusBtn");
-const plusMenu=document.getElementById("plusMenu");
-
-if(plusBtn && plusMenu){
-
-plusBtn.onclick=function(){
-
-if(plusMenu.style.display==="block"){
-    plusMenu.style.display="none";
-}else{
-    plusMenu.style.display="block";
-}
-
-};
-
-document.addEventListener("click",function(e){
-
-if(!plusBtn.contains(e.target) && !plusMenu.contains(e.target)){
-    plusMenu.style.display="none";
-}
-
-});
-
-}
-
-
-</script>
+<script src="features.js"></script>
 </head>
 
 <body>
@@ -549,13 +409,13 @@ box-shadow:0 2px 10px #999;
 z-index:999;
 ">
 
-<button onclick="image()">
+<button onclick="alert('📷 عکس Upload به راتلونکې کې فعاله شي')">
 📷 عکس
 </button>
 
 <br>
 
-<button onclick="voice()">
+<button onclick="alert('🎤 Voice Message به ژر فعاله شي')">
 🎤 Voice
 </button>
 
@@ -1111,34 +971,6 @@ function shareAnswer(text){
         alert("ځواب Copy شو ✅");
     }
 }
-
-
-const plusBtn=document.getElementById("plusBtn");
-const plusMenu=document.getElementById("plusMenu");
-
-if(plusBtn && plusMenu){
-
-plusBtn.onclick=function(){
-
-if(plusMenu.style.display==="block"){
-    plusMenu.style.display="none";
-}else{
-    plusMenu.style.display="block";
-}
-
-};
-
-document.addEventListener("click",function(e){
-
-if(!plusBtn.contains(e.target) && !plusMenu.contains(e.target)){
-    plusMenu.style.display="none";
-}
-
-});
-
-}
-
-
 </script>
 </body>
 </html>
