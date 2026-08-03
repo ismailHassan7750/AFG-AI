@@ -1,20 +1,26 @@
+import os
+import json
+import asyncio
+
 from flask import Flask, request, jsonify, render_template
 from openai import OpenAI
 from dotenv import load_dotenv
 from flask_cors import CORS
-import os
-import json
-import asyncio
+
 from memory_manager import load_chat, save_chat, build_messages
+
 load_dotenv()
 
 app = Flask(__name__)
 CORS(app)
 
+print("KEY EXISTS:", bool(os.getenv("OPENROUTER_API_KEY")))
+
 client = OpenAI(
     api_key=os.getenv("OPENROUTER_API_KEY"),
     base_url="https://openrouter.ai/api/v1"
 )
+
 print("API URL:", client.base_url)
 SYSTEM_PROMPT = """
 د پښتو عامیانه او سپکو کلمو په اړه ځانګړی قانون:
