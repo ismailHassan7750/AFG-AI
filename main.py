@@ -4,7 +4,6 @@ from dotenv import load_dotenv
 from flask_cors import CORS
 import os
 import json
-import edge_tts
 import asyncio
 from memory_manager import load_chat, save_chat, build_messages
 load_dotenv()
@@ -272,24 +271,6 @@ def chat():
 def home():
     return render_template("index.html")
 
-@app.route("/voice", methods=["POST"])
-def voice():
-
-    data = request.json
-    text = data.get("text", "")
-
-    async def make_voice():
-        communicate = edge_tts.Communicate(
-            text,
-            "ps-AF-GulNawazNeural"
-        )
-        await communicate.save("voice.mp3")
-
-    asyncio.run(make_voice())
-
-    return jsonify({
-        "audio": "/voice.mp3"
-    })
 
 if __name__ == "__main__":
     app.run(
