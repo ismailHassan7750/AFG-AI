@@ -25,6 +25,9 @@ def load_chat(owner_key):
             if isinstance(data, list):
                 return data
 
+            if isinstance(data, dict) and "memories" in data:
+                return data["memories"]
+
             return []
 
     except:
