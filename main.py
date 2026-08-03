@@ -302,7 +302,7 @@ def voice():
 @app.route("/", methods=["GET"])
 def home():
     return render_template("index.html")
-
+print("ROUTES:", [str(r) for r in app.url_map.iter_rules()])
 
 if __name__ == "__main__":
     app.run(
