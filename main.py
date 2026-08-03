@@ -129,7 +129,9 @@ WORD_FIXES = {
     "غین": "غین د نارینه تناسلي غړي لپاره یوه عامیانه او سپکه کلمه ده.",
     "کوس": "کوس د ښځینه تناسلي غړي لپاره یوه عامیانه او سپکه کلمه ده."
 }
-def ai_response(message, owner_key="", history=[]):
+def ai_response(message, owner_key="", history=None):
+    if history is None:
+        history = []
     try:
 
         system_prompt = SYSTEM_PROMPT
