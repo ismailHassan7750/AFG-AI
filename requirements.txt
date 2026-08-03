@@ -5,3 +5,4 @@ gunicorn
 requests
 flask-cors
 edge-tts
+edge-tts
