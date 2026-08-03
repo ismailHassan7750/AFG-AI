@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="ps">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>AFG AI</title>
+
+<style>
+
+body{
+margin:0;
+font-family:Arial,sans-serif;
+background:white;
+color:#111;
+}
+
+
+/* Menu */
+
+.sidebar{
+position:fixed;
+top:0;
+left:-260px;
+width:240px;
+height:100%;
+background:white;
+padding:15px;
+box-shadow:0 0 10px #ccc;
+transition:.3s;
+z-index:10;
+}
+
+.sidebar.open{
+left:0;
+}
+
+.sidebar button{
+width:100%;
+padding:12px;
+margin:6px 0;
+border-radius:10px;
+border:1px solid #ddd;
+background:#f5f5f5;
+font-size:15px;
+}
+
+
+/* Header */
+
+.header{
+text-align:center;
+padding:10px;
+}
+
+.bot-logo{
+width:55px;
+height:55px;
+border-radius:50%;
+object-fit:cover;
+}
+
+.header h1{
+font-size:22px;
+margin:5px;
+}
+
+.header p{
+font-size:13px;
+margin:2px;
+}
+
+
+/* Menu button */
+.menu-btn{
+position:fixed;
+top:10px;
+left:10px;
+z-index:99999999;
+font-size:28px;
+padding:5px;
+cursor:pointer;
+background:transparent;
+border:none;
+}
+/* Chat */
+
+.chat{
+margin:10px;
+height:60vh;
+background:#f5f5f5;
+border-radius:15px;
+padding:15px;
+overflow-y:auto;
+display:flex;
+flex-direction:column;
+scroll-behavior:smooth;
+}
+
+
+/* Messages */
+
+.message{
+max-width:80%;
+padding:10px;
+margin:6px;
+border-radius:12px;
+word-wrap:break-word;
+white-space:pre-wrap;
+overflow-wrap:anywhere;
+}
+
+.user{
+align-self:flex-end;
+background:#dcf8c6;
+}
+
+.ai{
+align-self:flex-start;
+background:white;
+}
+
+/* Bottom */
+
+.bottom{
+position:fixed;
+bottom:10px;
+left:10px;
+right:10px;
+display:flex;
+gap:5px;
+background:white;
+padding:5px;
+border-radius:15px;
+}
+
+
+textarea{
+flex:1;
+height:40px;
+border-radius:10px;
+padding:10px;
+border:1px solid #ccc;
+resize:none;
+}
+
+
+.btn{
+border:0;
+background:#111;
+color:white;
+border-radius:10px;
+padding:10px;
+}
+#menu{
+position:fixed;
+left:-280px;
+top:0;
+width:260px;
+height:100%;
+background:#fff;
+padding:20px;
+transition:0.3s;
+z-index:9999;
+}
+
+#menu.open{
+left:0;
+}
+
+#menu button{
+display:block;
+width:100%;
+margin:10px 0;
+padding:12px;
+border-radius:10px;
+border:0;
+}
+
+
+</style>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script>
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCHIHELL41hVXCNnvMmaRaBt1lIBmUsXYo",
+  authDomain: "afg-ai-4bc42.firebaseapp.com",
+  projectId: "afg-ai-4bc42",
+  storageBucket: "afg-ai-4bc42.firebasestorage.app",
+  messagingSenderId: "713068146312",
+  appId: "1:713068146312:android:ea6d48b42a48c13d"
+};
+
+firebase.initializeApp(firebaseConfig);
+
+const auth = firebase.auth();
+const db = firebase.firestore();
+
+</script>
+
+</head>
+
+<body>
+
+<div id="menu" class="sidebar">
+
+<button onclick="showChat()">💬 Chat</button>
+
+<button onclick="showHistory()">🕘 History</button>
+
+<button onclick="showProfile()">👤 Profile</button>
+
+<button onclick="showLogin()">🔑 Login</button>
+
+<button onclick="showSettings()">⚙️ Settings</button>
+
+<button onclick="window.open('https://www.facebook.com/jan878410')">
+📘 Facebook Page
+</button>
+
+<button onclick="window.open('https://wa.me/93787845610')">
+📱 WhatsApp +93 787845610
+</button>
+<button onclick="window.location.href='about.html'">
+ℹ️ About Me
+</button>
+</div>
+
+<p>
+Ismail Hasan
+</p>
+<button type="button" id="menuButton" class="menu-btn" style="position:fixed;top:10px;left:10px;z-index:999999;" onclick="openMenu()">
+☰
+</button>
+
+<div class="header">
+
+<img src="bot.png" class="bot-logo">
+
+<h1>AFG AI</h1>
+
+<p>Ismail Hasan</p>
+
+</div>
+
+
+<div class="chat" id="chat">
+
+</div>
+
+
+<div class="bottom">
+
+<textarea id="msg" placeholder="پیغام ولیکه..."></textarea>
+
+<button class="btn" onclick="voice()">🎤</button>
+
+<button class="btn" onclick="image()">🖼️</button>
+
+<button class="btn" onclick="send()">➤</button>
+
+</div>
+
+<script>
+function showChat(){
+
+document.getElementById("menu").classList.remove("open");
+
+document.getElementById("chat").innerHTML = "";
+
+}
+
+function openMenu(){
+
+document.getElementById("menu").classList.toggle("open");
+
+}
+async function send() {
+
+let box = document.getElementById("msg");
+let chat = document.getElementById("chat");
+
+let msg = box.value.trim();
+let key = "";
+
+if (msg.startsWith("/")) {
+    key = "AFG_ISMAIL_OWNER_2026";
+    msg = msg.substring(1).trim();
+}
+
+if(msg=="") return;
+
+chat.innerHTML += `
+<div class="message user">
+<b>ته:</b><br>${msg}
+</div>`;
+box.value="";
+let user = auth.currentUser;
+
+if(user){
+
+    db.collection("users")
+    .doc(user.uid)
+    .collection("messages")
+    .add({
+        text: msg,
+        sender: "user",
+        time: new Date()
+    });
+
+}
+try{
+
+let res = await fetch("https://afg-ai-b225.onbelmo.uk/chat",{
+method:"POST",
+headers:{
+"Content-Type":"application/json"
+},
+body:JSON.stringify({
+message: msg,
+owner_key: localStorage.getItem("afg_user_id") || key,
+history: JSON.parse(localStorage.getItem("chat_history") || "[]")
+})
+});
+let data = await res.json();
+
+let aiText = data.reply
+.replace(/&/g, "&amp;")
+.replace(/</g, "&lt;")
+.replace(/>/g, "&gt;");
+chat.innerHTML += `
+<div class="message ai">
+<b>AFG AI:</b><br>
+<pre style="white-space:pre-wrap;">${aiText}</pre>
+</div>`;
+let uid = localStorage.getItem("afg_user_id");
+
+if(uid){
+
+    db.collection("users")
+    .doc(uid)
+    .collection("messages")
+    .add({
+        text: aiText,
+        sender: "ai",
+        time: new Date()
+    });
+
+}
+}catch(e){
+
+chat.innerHTML += "<p style='color:red'><b>خطا:</b> API سره اړیکه ونشوه.</p>";
+
+}
+setTimeout(()=>{
+chat.lastElementChild.scrollIntoView({behavior:"smooth"});
+},100);
+}
+
+function image(){
+
+let input = document.createElement("input");
+
+input.type = "file";
+input.accept = "image/*";
+
+
+input.onchange = function(){
+
+let chat = document.getElementById("chat");
+
+let img = document.createElement("img");
+
+img.src = URL.createObjectURL(this.files[0]);
+
+img.style.width = "200px";
+img.style.borderRadius = "12px";
+img.style.margin = "10px";
+
+
+chat.appendChild(img);
+
+chat.scrollTop = chat.scrollHeight;
+
+};
+
+
+input.click();
+
+}
+
+
+
+
+function voice(){
+
+let SpeechRecognition =
+window.SpeechRecognition || window.webkitSpeechRecognition;
+
+
+if(!SpeechRecognition){
+
+alert("Voice ملاتړ نه کوي");
+
+return;
+
+}
+
+
+let rec = new SpeechRecognition();
+
+
+rec.lang = "ps-AF";
+
+rec.continuous = false;
+
+rec.interimResults = false;
+
+
+rec.onstart = function(){
+
+console.log("Voice start");
+
+};
+
+
+rec.onresult = function(event){
+
+document.getElementById("msg").value =
+event.results[0][0].transcript;
+
+};
+
+rec.onerror = function(){
+    alert("Voice error");
+};
+
+rec.start();
+
+}
+
+function newChat(){
+    document.getElementById("chat").innerHTML="";
+}
+function showHistory(){
+
+document.getElementById("menu").classList.remove("open");
+
+let chat = document.getElementById("chat");
+
+chat.innerHTML = `
+<h2>🕘 Chat History</h2>
+<div id="historyList">
+Loading...
+</div>
+
+<br>
+
+<button class="btn" onclick="newChat()">➕ New Chat</button>
+
+<button class="btn" onclick="showChat()">⬅️ Back to Chat</button>
+`;
+
+let uid = localStorage.getItem("afg_user_id");
+
+if(!uid){
+    document.getElementById("historyList").innerHTML =
+    "Login وکړئ چې History وګورئ";
+    return;
+}
+
+db.collection("users")
+.doc(uid)
+.collection("messages")
+.orderBy("time")
+.get()
+.then(snapshot => {
+
+let html = "";
+
+snapshot.forEach(doc => {
+
+let m = doc.data();
+
+html += `
+<div class="setting-item">
+<b>${m.sender=="user" ? "👤 ته" : "🤖 AFG AI"}:</b>
+<br>
+${m.text}
+</div>
+`;
+
+});
+
+document.getElementById("historyList").innerHTML =
+html || "History نشته";
+
+});
+
+}
+function showProfile(){
+
+    window.location.href="profile.html";
+
+}
+function showTranslate(){
+
+document.getElementById("menu").classList.remove("open");
+
+document.getElementById("chat").innerHTML = `
+
+<h2>🌐 Translate</h2>
+
+<p>ژبه انتخاب کړئ:</p>
+
+<button class="btn">پښتو</button>
+<button class="btn">دري</button>
+<button class="btn">English</button>
+<button class="btn">عربي</button>
+
+<br><br>
+
+<button class="btn" onclick="openMenu()">⬅️ Back to Menu</button>
+`;
+
+}
+function showSettings(){
+
+document.getElementById("menu").classList.remove("open");
+
+document.getElementById("chat").innerHTML = `
+<h2>⚙️ Settings</h2>
+
+<button class="btn" onclick="showAppearance()">🎨 Appearance</button><br><br>
+
+<button class="btn" onclick="showLanguage()">🌐 Language</button><br><br>
+
+<button class="btn" onclick="showChat()">⬅️ Back</button>
+`;
+}
+function showAppearance(){
+document.getElementById("chat").innerHTML = `
+<h2>🎨 Appearance</h2>
+
+<button class="btn">System (Default)</button><br><br>
+
+<button class="btn">Light</button><br><br>
+
+<button class="btn">Dark</button><br><br>
+
+<button class="btn" onclick="showSettings()">⬅ Back</button>
+`;
+}
+
+function showLanguage(){
+document.getElementById("chat").innerHTML = `
+<h2>🌐 Language</h2>
+
+<button class="btn">پښتو</button><br><br>
+
+<button class="btn">دري</button><br><br>
+
+<button class="btn">English</button><br><br>
+
+<button class="btn">عربي</button><br><br>
+
+<button class="btn" onclick="showSettings()">⬅ Back</button>
+`;
+}
+function showAbout(){
+
+document.getElementById("chat").innerHTML = `
+
+<h2>ℹ️ About Me</h2>
+
+<p>👤 نوم: اسماعیل حسن</p>
+
+<p>📍 ځای:<br>
+🇦🇫 افغانستان<br>
+ننګرهار ولایت<br>
+شینوار ولسوالۍ<br>
+ګلاهي کلی</p>
+
+<p>🎂 عمر:<br>
+22 کلن</p>
+
+<p>🎯 هدف:<br>
+د ټکنالوژۍ او مصنوعي ځیرکتیا له لارې خلکو ته مرسته، زده کړه، معلومات او اسانه حل لارې برابرول.</p>
+
+<p>🤖 پروژه:<br>
+AFG AI</p>
+
+<p>💻 شوقونه:<br>
+• کوډنګ (Coding)<br>
+• ټکنالوژي<br>
+• پروګرامونه جوړول<br>
+• AI<br>
+• اپلیکیشن جوړول</p>
+
+<p>📱 WhatsApp:<br>
+0787845610</p>
+
+<p>📞 شخصي نمبر:<br>
+0771514161</p>
+
+<p>🌐 ژبې:<br>
+پښتو، دري، English، عربي</p>
+
+<br>
+
+<button class="btn" onclick="showChat()">⬅️ Back to Chat</button>
+
+`;
+
+}
+function showLogin(){
+
+document.getElementById("menu").classList.remove("open");
+
+document.getElementById("chat").innerHTML = `
+
+<h2>🔑 Login</h2>
+
+<input type="email" id="email" placeholder="Email"
+style="width:100%;padding:10px;margin:10px 0;">
+
+<input type="password" id="password" placeholder="Password"
+style="width:100%;padding:10px;margin:10px 0;">
+
+<button class="btn" onclick="loginUser()">✅ Login</button>
+
+<br><br>
+
+<button class="btn" onclick="googleLogin()">🌐 Login with Google</button>
+
+<button class="btn" onclick="createUser()">🆕 Create Account</button>
+
+<br><br>
+
+<button class="btn" onclick="resetPassword()">🔑 Forgot Password</button>
+
+<br><br>
+
+<button class="btn" onclick="showSettings()">⬅ Back</button>
+
+`;
+
+}function createUser(){
+auth.createUserWithEmailAndPassword(email,password)
+.then((result)=>{
+
+let user = result.user;
+
+localStorage.setItem("afg_user_id", user.uid);
+localStorage.setItem("afg_email", user.email);
+
+alert("Account جوړ شو ✅");
+
+})
+.catch(e=>{
+alert(e.message);
+});
+
+}
+
+
+function loginUser(){
+auth.signInWithEmailAndPassword(email,password)
+.then((result)=>{
+
+let user = result.user;
+
+localStorage.setItem("afg_user_id", user.uid);
+localStorage.setItem("afg_email", user.email);
+
+alert("Login کامیاب شو ✅");
+
+})
+.catch(e=>{
+alert(e.message);
+});
+
+}
+
+function resetPassword(){
+
+let email=document.getElementById("email").value;
+
+auth.sendPasswordResetEmail(email)
+.then(()=>{
+alert("Password reset email ولیږل شو");
+})
+.catch(e=>{
+alert(e.message);
+});
+
+}
+
+
+function createUser(){
+
+let email=document.getElementById("email").value;
+let password=document.getElementById("password").value;
+
+auth.createUserWithEmailAndPassword(email,password)
+.then(()=>{
+alert("حساب جوړ شو ✅");
+})
+.catch(e=>{
+alert(e.message);
+});
+
+}
+window.onload = function(){
+
+let user = localStorage.getItem("afg_user_id");
+
+if(!user){
+    showLogin();
+}else{
+    showChat();
+}
+
+}
+</script>
+
+</body>
+</html>

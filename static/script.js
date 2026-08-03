@@ -50,35 +50,38 @@ sendBtn.onclick = async () => {
     const text = message.value.trim();
 
     if(text === "") return;
-
-    chatBox.innerHTML += `
-    <div class="user-message">
-        ${text}
-    </div>
-    `;
-
+chatBox.innerHTML += `
+<div class="user-message">
+    ${text}
+</div>`;
     message.value = "";
 
-    const response = await fetch("/chat",{
-        method:"POST",
-        headers:{
-            "Content-Type":"application/json"
-        },
-        body:JSON.stringify({
-    message:text,
-    owner_key: ownerKey
-})
-    });
+const response = await fetch("/chat",{
+    method:"POST",
+    headers:{
+        "Content-Type":"application/json"
+    },
+    body:JSON.stringify({
+        message:text,
+        owner_key: ownerKey
+    })
+});
 
-    const result = await response.json();
+const result = await response.json();
 
-    chatBox.innerHTML += `
-    <div class="ai-message">
-        ${result.reply}
+chatBox.innerHTML += `
+<div class="ai-message">
+    ${result.reply}
+    <div class="ai-actions">
+        ❤️
+        <button onclick="speakText(\`${result.reply}\`)">🔊</button>
+        📤
+        ⋮
     </div>
-    `;
+</div>`;
 
-    chatBox.scrollTop = chatBox.scrollHeight;
+
+chatBox.scrollTop = chatBox.scrollHeight;
 
 };
 
@@ -243,3 +246,20 @@ loadHistory();
 
 console.log("✅ AFG AI Script Loaded");
 
+async function speakText(text){
+
+    const response = await fetch("/voice", {
+        method: "POST",
+        headers:{
+            "Content-Type":"application/json"
+        },
+        body: JSON.stringify({
+            text: text
+        })
+    });
+
+    const data = await response.json();
+
+    const audio = new Audio(data.audio + "?t=" + Date.now());
+    audio.play();
+}

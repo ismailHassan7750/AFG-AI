@@ -311,9 +311,93 @@ transform:scale(.97);
 
 </style>
 
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js">
+document.addEventListener("DOMContentLoaded", function(){
+
+    const plusBtn = document.getElementById("plusBtn");
+    const plusMenu = document.getElementById("plusMenu");
+
+    if(plusBtn && plusMenu){
+
+        plusBtn.onclick = function(e){
+            e.stopPropagation();
+
+            if(plusMenu.style.display === "block"){
+                plusMenu.style.display = "none";
+            }else{
+                plusMenu.style.display = "block";
+            }
+        };
+
+        document.addEventListener("click", function(e){
+            if(!plusMenu.contains(e.target) && e.target !== plusBtn){
+                plusMenu.style.display = "none";
+            }
+        });
+
+    }
+
+});
+
+</script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js">
+document.addEventListener("DOMContentLoaded", function(){
+
+    const plusBtn = document.getElementById("plusBtn");
+    const plusMenu = document.getElementById("plusMenu");
+
+    if(plusBtn && plusMenu){
+
+        plusBtn.onclick = function(e){
+            e.stopPropagation();
+
+            if(plusMenu.style.display === "block"){
+                plusMenu.style.display = "none";
+            }else{
+                plusMenu.style.display = "block";
+            }
+        };
+
+        document.addEventListener("click", function(e){
+            if(!plusMenu.contains(e.target) && e.target !== plusBtn){
+                plusMenu.style.display = "none";
+            }
+        });
+
+    }
+
+});
+
+</script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js">
+document.addEventListener("DOMContentLoaded", function(){
+
+    const plusBtn = document.getElementById("plusBtn");
+    const plusMenu = document.getElementById("plusMenu");
+
+    if(plusBtn && plusMenu){
+
+        plusBtn.onclick = function(e){
+            e.stopPropagation();
+
+            if(plusMenu.style.display === "block"){
+                plusMenu.style.display = "none";
+            }else{
+                plusMenu.style.display = "block";
+            }
+        };
+
+        document.addEventListener("click", function(e){
+            if(!plusMenu.contains(e.target) && e.target !== plusBtn){
+                plusMenu.style.display = "none";
+            }
+        });
+
+    }
+
+});
+
+</script>
 <script>
 
 const firebaseConfig = {
@@ -330,8 +414,64 @@ firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const db = firebase.firestore();
 
+
+document.addEventListener("DOMContentLoaded", function(){
+
+    const plusBtn = document.getElementById("plusBtn");
+    const plusMenu = document.getElementById("plusMenu");
+
+    if(plusBtn && plusMenu){
+
+        plusBtn.onclick = function(e){
+            e.stopPropagation();
+
+            if(plusMenu.style.display === "block"){
+                plusMenu.style.display = "none";
+            }else{
+                plusMenu.style.display = "block";
+            }
+        };
+
+        document.addEventListener("click", function(e){
+            if(!plusMenu.contains(e.target) && e.target !== plusBtn){
+                plusMenu.style.display = "none";
+            }
+        });
+
+    }
+
+});
+
 </script>
-<script src="features.js"></script>
+<script src="features.js">
+document.addEventListener("DOMContentLoaded", function(){
+
+    const plusBtn = document.getElementById("plusBtn");
+    const plusMenu = document.getElementById("plusMenu");
+
+    if(plusBtn && plusMenu){
+
+        plusBtn.onclick = function(e){
+            e.stopPropagation();
+
+            if(plusMenu.style.display === "block"){
+                plusMenu.style.display = "none";
+            }else{
+                plusMenu.style.display = "block";
+            }
+        };
+
+        document.addEventListener("click", function(e){
+            if(!plusMenu.contains(e.target) && e.target !== plusBtn){
+                plusMenu.style.display = "none";
+            }
+        });
+
+    }
+
+});
+
+</script>
 </head>
 
 <body>
@@ -409,31 +549,19 @@ box-shadow:0 2px 10px #999;
 z-index:999;
 ">
 
-<button onclick="alert('📷 عکس Upload به راتلونکې کې فعاله شي')">
-📷 عکس
-</button>
 
-<br>
 
-<button onclick="alert('🎤 Voice Message به ژر فعاله شي')">
-🎤 Voice
-</button>
-
-<br>
-
-<button onclick="alert('📁 فایل Upload به ژر فعاله شي')">
-📁 فایل
-</button>
-
+<button onclick="image()">🖼️ عکس</button>
+<button onclick="voice()">🎤 Voice</button>
 </div>
 </div>
 
 <textarea id="msg" placeholder="پیغام ولیکه..."></textarea>
 
 
-<button class="btn" onclick="voice()">🎤</button>
+<button class="btn" onclick="voice()" id="voiceBtn" style="display:none;">🎤</button>
 
-<button class="btn" onclick="image()">🖼️</button>
+<button class="btn" onclick="image()" id="imageBtn" style="display:none;">🖼️</button>
 
 <button class="btn" onclick="send()">➤</button>
 
@@ -971,6 +1099,34 @@ function shareAnswer(text){
         alert("ځواب Copy شو ✅");
     }
 }
+
+document.addEventListener("DOMContentLoaded", function(){
+
+    const plusBtn = document.getElementById("plusBtn");
+    const plusMenu = document.getElementById("plusMenu");
+
+    if(plusBtn && plusMenu){
+
+        plusBtn.onclick = function(e){
+            e.stopPropagation();
+
+            if(plusMenu.style.display === "block"){
+                plusMenu.style.display = "none";
+            }else{
+                plusMenu.style.display = "block";
+            }
+        };
+
+        document.addEventListener("click", function(e){
+            if(!plusMenu.contains(e.target) && e.target !== plusBtn){
+                plusMenu.style.display = "none";
+            }
+        });
+
+    }
+
+});
+
 </script>
 </body>
 </html>

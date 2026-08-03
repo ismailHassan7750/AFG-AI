@@ -62,7 +62,8 @@ WebSettings settings = webView.getSettings();
 settings.setJavaScriptEnabled(true);
 settings.setDomStorageEnabled(true);
 settings.setAllowFileAccess(true);
-
+settings.setAllowContentAccess(true);
+settings.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
 
 webView.addJavascriptInterface(
         new Object(){
@@ -87,12 +88,10 @@ public void speak(String text){
 
         if(status == TextToSpeech.SUCCESS){
 
-Locale locale = new Locale("fa", "IR");
-
+Locale locale = new Locale("ps", "AF");
 tts[0].setLanguage(locale);
 tts[0].setSpeechRate(0.9f);
 tts[0].setPitch(1.0f);
-
             tts[0].speak(
                     text,
                     TextToSpeech.QUEUE_FLUSH,
