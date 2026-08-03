@@ -46,10 +46,6 @@ def save_chat(owner_key, user, ai):
         json.dump(history, f, ensure_ascii=False, indent=2)
 
 def build_messages(system_prompt, history, message):
-
-    if not isinstance(history, list):
-        history = []
-
     messages = [
         {
             "role": "system",
@@ -57,22 +53,17 @@ def build_messages(system_prompt, history, message):
         }
     ]
 
-for item in history[-30:]:
-    if isinstance(item, dict):
-        messages.append({
-            "role": "user",
-            "content": item.get("user", "")
-        })
+    for item in history[-30:]:
+        if isinstance(item, dict):
+            messages.append({
+                "role": "user",
+                "content": item.get("user", "")
+            })
 
-        messages.append({
-            "role": "assistant",
-            "content": item.get("ai", "")
-        })
-
-        messages.append({
-            "role": "assistant",
-            "content": item.get("ai", "")
-        })
+            messages.append({
+                "role": "assistant",
+                "content": item.get("ai", "")
+            })
 
     messages.append({
         "role": "user",
