@@ -1,7 +1,7 @@
 import os
 import json
 import asyncio
-
+import edge_tts
 from flask import Flask, request, jsonify, render_template
 from openai import OpenAI
 from dotenv import load_dotenv
@@ -143,8 +143,9 @@ def ai_response(message, owner_key="", history=[]):
             chat_memory = {"memories": []}
 
         chat_memory["memories"].append({
-            "user": message
-        })
+    "user": message,
+    "ai": ""
+})
 
         with open(get_chat_memory_file(owner_key), "w", encoding="utf-8") as f:
             json.dump(chat_memory, f, ensure_ascii=False, indent=2)
@@ -201,7 +202,7 @@ def ai_response(message, owner_key="", history=[]):
 
             if memories:
                 memory_text = "\n".join(
-                    [m["user"] for m in memories[-10:]]
+                    [m.get("user", "") for m in memories[-10:] if isinstance(m, dict)]
                 )
 
                 system_prompt += f"""
@@ -243,8 +244,10 @@ def ai_response(message, owner_key="", history=[]):
         )
 
         return ai_text
+
     except Exception as e:
         return f"AI Error: {e}"
+
 @app.route("/history", methods=["GET"])
 def get_history():
     try:
@@ -258,6 +261,8 @@ def get_history():
             "error": str(e),
             "history": []
         }), 500
+
+
 @app.route("/chat", methods=["POST"])
 def chat():
     data = request.json
@@ -273,6 +278,24 @@ def chat():
 
     return jsonify({
         "reply": reply
+    })
+
+
+@app.route("/voice", methods=["POST"])
+def voice():
+    text = request.json.get("text", "")
+
+    async def make_voice():
+        communicate = edge_tts.Communicate(
+            text,
+            "ps-AF-GulNawazNeural"
+        )
+        await communicate.save("static/voice.mp3")
+
+    asyncio.run(make_voice())
+
+    return jsonify({
+        "audio": "/static/voice.mp3"
     })
 
 
