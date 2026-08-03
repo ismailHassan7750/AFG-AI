@@ -292,7 +292,7 @@ def voice():
     async def make_voice():
         communicate = edge_tts.Communicate(
             text,
-            "ps-AF-GulNawazNeural"
+            "ps-AF-LatifaNeural"
         )
         await communicate.save("static/voice.mp3")
 
