@@ -311,9 +311,93 @@ transform:scale(.97);
 
 </style>
 
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js">
+
+const plusBtn=document.getElementById("plusBtn");
+const plusMenu=document.getElementById("plusMenu");
+
+if(plusBtn && plusMenu){
+
+plusBtn.onclick=function(){
+
+if(plusMenu.style.display==="block"){
+    plusMenu.style.display="none";
+}else{
+    plusMenu.style.display="block";
+}
+
+};
+
+document.addEventListener("click",function(e){
+
+if(!plusBtn.contains(e.target) && !plusMenu.contains(e.target)){
+    plusMenu.style.display="none";
+}
+
+});
+
+}
+
+
+</script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js">
+
+const plusBtn=document.getElementById("plusBtn");
+const plusMenu=document.getElementById("plusMenu");
+
+if(plusBtn && plusMenu){
+
+plusBtn.onclick=function(){
+
+if(plusMenu.style.display==="block"){
+    plusMenu.style.display="none";
+}else{
+    plusMenu.style.display="block";
+}
+
+};
+
+document.addEventListener("click",function(e){
+
+if(!plusBtn.contains(e.target) && !plusMenu.contains(e.target)){
+    plusMenu.style.display="none";
+}
+
+});
+
+}
+
+
+</script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js">
+
+const plusBtn=document.getElementById("plusBtn");
+const plusMenu=document.getElementById("plusMenu");
+
+if(plusBtn && plusMenu){
+
+plusBtn.onclick=function(){
+
+if(plusMenu.style.display==="block"){
+    plusMenu.style.display="none";
+}else{
+    plusMenu.style.display="block";
+}
+
+};
+
+document.addEventListener("click",function(e){
+
+if(!plusBtn.contains(e.target) && !plusMenu.contains(e.target)){
+    plusMenu.style.display="none";
+}
+
+});
+
+}
+
+
+</script>
 <script>
 
 const firebaseConfig = {
@@ -330,8 +414,64 @@ firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const db = firebase.firestore();
 
+
+
+const plusBtn=document.getElementById("plusBtn");
+const plusMenu=document.getElementById("plusMenu");
+
+if(plusBtn && plusMenu){
+
+plusBtn.onclick=function(){
+
+if(plusMenu.style.display==="block"){
+    plusMenu.style.display="none";
+}else{
+    plusMenu.style.display="block";
+}
+
+};
+
+document.addEventListener("click",function(e){
+
+if(!plusBtn.contains(e.target) && !plusMenu.contains(e.target)){
+    plusMenu.style.display="none";
+}
+
+});
+
+}
+
+
 </script>
-<script src="features.js"></script>
+<script src="features.js">
+
+const plusBtn=document.getElementById("plusBtn");
+const plusMenu=document.getElementById("plusMenu");
+
+if(plusBtn && plusMenu){
+
+plusBtn.onclick=function(){
+
+if(plusMenu.style.display==="block"){
+    plusMenu.style.display="none";
+}else{
+    plusMenu.style.display="block";
+}
+
+};
+
+document.addEventListener("click",function(e){
+
+if(!plusBtn.contains(e.target) && !plusMenu.contains(e.target)){
+    plusMenu.style.display="none";
+}
+
+});
+
+}
+
+
+</script>
 </head>
 
 <body>
@@ -971,6 +1111,34 @@ function shareAnswer(text){
         alert("ځواب Copy شو ✅");
     }
 }
+
+
+const plusBtn=document.getElementById("plusBtn");
+const plusMenu=document.getElementById("plusMenu");
+
+if(plusBtn && plusMenu){
+
+plusBtn.onclick=function(){
+
+if(plusMenu.style.display==="block"){
+    plusMenu.style.display="none";
+}else{
+    plusMenu.style.display="block";
+}
+
+};
+
+document.addEventListener("click",function(e){
+
+if(!plusBtn.contains(e.target) && !plusMenu.contains(e.target)){
+    plusMenu.style.display="none";
+}
+
+});
+
+}
+
+
 </script>
 </body>
 </html>
