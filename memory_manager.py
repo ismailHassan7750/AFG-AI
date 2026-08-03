@@ -42,6 +42,8 @@ def save_chat(owner_key, user, ai):
 
 
 def build_messages(system_prompt, history, message):
+    if not isinstance(history, list):
+        history = []
     messages = [
         {
             "role": "system",
