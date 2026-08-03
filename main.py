@@ -1,4 +1,4 @@
-import os
+ړimport os
 import json
 import asyncio
 import edge_tts
@@ -279,7 +279,9 @@ def chat():
     return jsonify({
         "reply": reply
     })
-
+@app.route("/testvoice")
+def testvoice():
+    return "VOICE ROUTE READY"
 
 @app.route("/voice", methods=["POST"])
 def voice():
