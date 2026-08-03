@@ -388,7 +388,48 @@ const db = firebase.firestore();
 
 <div class="bottom">
 
+
+<div id="plusBox" style="position:relative;">
+<button id="plusBtn" style="
+font-size:28px;
+border:none;
+background:none;
+cursor:pointer;
+">+</button>
+
+<div id="plusMenu" style="
+display:none;
+position:absolute;
+bottom:45px;
+left:0;
+background:white;
+border-radius:12px;
+padding:10px;
+box-shadow:0 2px 10px #999;
+z-index:999;
+">
+
+<button onclick="alert('📷 عکس Upload به راتلونکې کې فعاله شي')">
+📷 عکس
+</button>
+
+<br>
+
+<button onclick="alert('🎤 Voice Message به ژر فعاله شي')">
+🎤 Voice
+</button>
+
+<br>
+
+<button onclick="alert('📁 فایل Upload به ژر فعاله شي')">
+📁 فایل
+</button>
+
+</div>
+</div>
+
 <textarea id="msg" placeholder="پیغام ولیکه..."></textarea>
+
 
 <button class="btn" onclick="voice()">🎤</button>
 
@@ -486,7 +527,7 @@ if(user){
 }
 try{
 
-let res = await fetch("https://afg-ai-b225.onbelmo.uk/chat",{
+let res = await fetch("https://web-production-fc964.up.railway.app/chat",{
 method:"POST",
 headers:{
 "Content-Type":"application/json"
@@ -510,7 +551,7 @@ chat.innerHTML += `
 
 <div class="ai-actions">
 <button onclick="likeAnswer(this)">👍</button>
-<button onclick="voiceRead('${aiText}')">🔊</button>
+<button onclick="voiceRead(this.closest('.message').innerText)">🔊</button>
 <button onclick="shareAnswer('${aiText}')">📤</button>
 <button onclick="chatOptions()">⋮</button>
 </div>
@@ -891,44 +932,45 @@ if(!user){
 
 }
 function likeAnswer(btn){
-btn.innerHTML="❤️";
+    btn.innerHTML = "❤️";
 }
+
 async function voiceRead(text){
+    try{
+        let res = await fetch("https://web-production-fc964.up.railway.app/voice", {
+            method:"POST",
+            headers:{
+                "Content-Type":"application/json"
+            },
+            body:JSON.stringify({
+                text:text
+            })
+        });
 
-try{
+        let data = await res.json();
 
-let res = await fetch("https://afg-ai-b225.onbelmo.uk/voice", {
-    method:"POST",
-    headers:{
-        "Content-Type":"application/json"
-    },
-    body:JSON.stringify({
-        text:text
-    })
-});
+        let audio = new Audio(
+            "https://web-production-fc964.up.railway.app" + data.audio + "?t=" + Date.now()
+        );
 
-let data = await res.json();
+        audio.play();
 
-let audio = new Audio(
-    "https://afg-ai-b225.onbelmo.uk" + data.audio
-);
-
-audio.play();
-
-}catch(e){
-
-alert("غږ ستونزه لري ❌");
-
+   }catch(e){
+    alert("VOICE ERROR: " + e);
+    console.log("VOICE ERROR:", e);
 }
-
 }
 
 function shareAnswer(text){
-navigator.clipboard.writeText(text);
-alert("ځواب Copy شو ✅");
+    if (navigator.share){
+        navigator.share({
+            text: text
+        });
+    } else {
+        navigator.clipboard.writeText(text);
+        alert("ځواب Copy شو ✅");
+    }
 }
-
 </script>
-
 </body>
 </html>
