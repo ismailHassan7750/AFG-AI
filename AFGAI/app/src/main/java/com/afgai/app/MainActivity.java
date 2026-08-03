@@ -80,6 +80,32 @@ webView.addJavascriptInterface(
             }
 
 @JavascriptInterface
+public void startCall(){
+
+    runOnUiThread(() -> {
+
+        android.speech.SpeechRecognizer recognizer =
+                android.speech.SpeechRecognizer.createSpeechRecognizer(
+                        MainActivity.this
+                );
+
+        android.content.Intent intent =
+                new android.content.Intent(
+                        android.speech.RecognizerIntent.ACTION_RECOGNIZE_SPEECH
+                );
+
+        intent.putExtra(
+                android.speech.RecognizerIntent.EXTRA_LANGUAGE,
+                "ps-AF"
+        );
+
+        recognizer.startListening(intent);
+
+    });
+
+}
+
+@JavascriptInterface
 public void speak(String text){
 
     final TextToSpeech[] tts = new TextToSpeech[1];
