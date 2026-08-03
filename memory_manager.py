@@ -57,13 +57,16 @@ def build_messages(system_prompt, history, message):
         }
     ]
 
-    for item in history[-30:]:
-        if not isinstance(item, dict):
-            continue
-
+for item in history[-30:]:
+    if isinstance(item, dict):
         messages.append({
             "role": "user",
             "content": item.get("user", "")
+        })
+
+        messages.append({
+            "role": "assistant",
+            "content": item.get("ai", "")
         })
 
         messages.append({
