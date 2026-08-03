@@ -38,15 +38,15 @@ def save_chat(owner_key, user, ai):
     history = load_chat(owner_key)
 
     history.append({
-        "user": user,
-        "ai": ai
+        "user": str(user),
+        "ai": str(ai)
     })
 
     if len(history) > 200:
         history = history[-200:]
 
     with open(chat_file(owner_key), "w", encoding="utf-8") as f:
-        json.dump(history, f, ensure_ascii=False, indent=2)
+        json.dump({"memories": history}, f, ensure_ascii=False, indent=2)
 
 def build_messages(system_prompt, history, message):
     messages = [
@@ -58,17 +58,22 @@ def build_messages(system_prompt, history, message):
 
     for item in history[-30:]:
         if isinstance(item, dict):
-            messages.append({
-                "role": "user",
-                "content": item.get("user", "")
-            })
+            user_text = item.get("user", "")
+            ai_text = item.get("ai", "")
 
-            messages.append({
-                "role": "assistant",
-                "content": item.get("ai", "")
-            })
+            if isinstance(user_text, str) and user_text:
+                messages.append({
+                    "role": "user",
+                    "content": user_text
+                })
 
-    messages.append({
+            if isinstance(ai_text, str) and ai_text:
+                messages.append({
+                    "role": "assistant",
+                    "content": ai_text
+                })
+
+messages.append({
         "role": "user",
         "content": message
     })
