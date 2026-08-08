@@ -273,11 +273,11 @@ def ai_response(message, owner_key="", history=None):
               sum(len(str(m.get("content", ""))) for m in messages),
               "characters")
 
-        print("USING MODEL: cognitivecomputations/dolphin-mistral-24b-venice-edition:free")
+        print("USING MODEL: cognitivecomputations/dolphin3.0-r1-mistral-24b:free")
         print("KEY START:", os.getenv("OPENROUTER_API_KEY")[:10])
 
         response = client.chat.completions.create(
-            model="cognitivecomputations/dolphin-mistral-24b-venice-edition:free",
+            model="cognitivecomputations/dolphin3.0-r1-mistral-24b:free",
             temperature=0.9,
             top_p=0.9,
             max_tokens=4000,
@@ -373,7 +373,7 @@ def image_ai():
     try:
 
         response = client.chat.completions.create(
-        model="cognitivecomputations/dolphin-mistral-24b-venice-edition:free",
+        model="cognitivecomputations/dolphin3.0-r1-mistral-24b:free",
         messages=[
             {
                 "role":"user",
