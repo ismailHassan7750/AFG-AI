@@ -216,19 +216,68 @@ def ai_response(message, owner_key="", history=None):
 """
         except Exception as e:
             print("MEMORY ERROR:", e)
+        # ---------------------------------------------------------
+        # CONTEXT SAFETY
+        # Keep the complete history on disk, but never send a huge
+        # history/memory payload to the AI API.
+        # ---------------------------------------------------------
+
         saved_chat = load_chat(owner_key)
 
+        safe_chat = []
+
+        for item in saved_chat[-8:]:
+            if not isinstance(item, dict):
+                continue
+
+            user_text = str(item.get("user", ""))[:1500]
+            ai_text_old = str(item.get("ai", ""))[:2500]
+
+            safe_chat.append({
+                "user": user_text,
+                "ai": ai_text_old
+            })
+
+        # Keep the system prompt itself reasonably small.
+        safe_system_prompt = str(system_prompt)
+
+        if len(safe_system_prompt) > 18000:
+            safe_system_prompt = safe_system_prompt[:18000]
+
         messages = build_messages(
-            system_prompt,
-            saved_chat,
-                    message
+            safe_system_prompt,
+            safe_chat,
+            str(message)[:4000]
         )
+
+        # Final emergency protection:
+        # limit total text before sending to OpenRouter.
+        total_chars = sum(
+            len(str(m.get("content", "")))
+            for m in messages
+            if isinstance(m, dict)
+        )
+
+        if total_chars > 60000:
+            trimmed = [
+                messages[0]
+            ]
+
+            for m in messages[1:-1][-4:]:
+                trimmed.append(m)
+
+            trimmed.append(messages[-1])
+            messages = trimmed
+
+        print("CONTEXT SAFE:", len(messages), "messages,", 
+              sum(len(str(m.get("content", ""))) for m in messages),
+              "characters")
 
         print("USING MODEL: google/gemini-2.5-flash")
         print("KEY START:", os.getenv("OPENROUTER_API_KEY")[:10])
 
         response = client.chat.completions.create(
-            model="openai/gpt-4o-mini",
+            model="google/gemini-2.5-flash",
             temperature=0.9,
             top_p=0.9,
             max_tokens=6000,
@@ -303,6 +352,61 @@ def voice():
     return jsonify({
         "audio": "/static/voice.mp3"
     })
+
+
+
+
+@app.route("/image", methods=["POST"])
+def image_ai():
+
+    image = request.files.get("image")
+    question = request.form.get("question", "دا عکس تحلیل کړه")
+
+    if not image:
+        return jsonify({"reply":"عکس ونه موندل شو"})
+
+    import base64
+
+    img_bytes = image.read()
+    img_base64 = base64.b64encode(img_bytes).decode("utf-8")
+
+    try:
+
+        response = client.chat.completions.create(
+        model="google/gemini-2.5-flash",
+        messages=[
+            {
+                "role":"user",
+                "content":[
+                    {
+                        "type":"text",
+                        "text":question
+                    },
+                    {
+                        "type":"image_url",
+                        "image_url":{
+                            "url":
+                            f"data:image/png;base64,{img_base64}"
+                        }
+                    }
+                ]
+            }
+        ]
+    )
+
+        reply = response.choices[0].message.content
+
+        return jsonify({
+            "reply": reply
+        })
+
+    except Exception as e:
+
+        print("IMAGE AI ERROR:", e)
+
+        return jsonify({
+            "reply": "Image AI Error: " + str(e)
+        }), 500
 
 
 @app.route("/", methods=["GET"])
