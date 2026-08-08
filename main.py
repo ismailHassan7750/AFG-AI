@@ -129,6 +129,56 @@ WORD_FIXES = {
     "غین": "غین د نارینه تناسلي غړي لپاره یوه عامیانه او سپکه کلمه ده.",
     "کوس": "کوس د ښځینه تناسلي غړي لپاره یوه عامیانه او سپکه کلمه ده."
 }
+
+FREE_MODEL_FALLBACKS = [
+    "tasal9/ZamAI-LIama3-Pashto",
+    "qwen/qwen3-next-80b-a3b-instruct:free",
+    "qwen/qwen3-coder:free",
+    "google/gemma-4-31b-it:free",
+    "google/gemma-4-26b-a4b-it:free",
+    "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "qwen/qwen3-32b:free",
+    "openrouter/free"
+]
+
+def ask_with_model_fallback(messages):
+    last_error = None
+
+    for model_name in FREE_MODEL_FALLBACKS:
+        try:
+            print("================================")
+            print("TRYING MODEL:", model_name)
+            print("================================")
+
+            response = client.chat.completions.create(
+                model=model_name,
+                temperature=0.9,
+                top_p=0.9,
+                max_tokens=2000,
+                messages=messages
+            )
+
+            if response.choices:
+                text = response.choices[0].message.content
+
+                if text and text.strip():
+                    print("✅ MODEL SUCCESS:", model_name)
+                    return text.strip()
+
+            print("⚠️ EMPTY RESPONSE:", model_name)
+
+        except Exception as e:
+            last_error = e
+            print("❌ MODEL FAILED:", model_name)
+            print("ERROR:", e)
+            continue
+
+    raise RuntimeError(
+        "ټول fallback models ناکام شول. وروستۍ تېروتنه: "
+        + str(last_error)
+    )
+
+
 def ai_response(message, owner_key="", history=None):
     if history is None:
         history = []
@@ -273,20 +323,14 @@ def ai_response(message, owner_key="", history=None):
               sum(len(str(m.get("content", ""))) for m in messages),
               "characters")
 
-        print("USING MODEL: cognitivecomputations/dolphin3.0-r1-mistral-24b:free")
-        print("KEY START:", os.getenv("OPENROUTER_API_KEY")[:10])
+        print("FREE MODEL FALLBACK SYSTEM ACTIVE")
 
-        response = client.chat.completions.create(
-            model="cognitivecomputations/dolphin3.0-r1-mistral-24b:free",
-            temperature=0.9,
-            top_p=0.9,
-            max_tokens=4000,
-            messages=messages
-        )
+        response_text = ask_with_model_fallback(messages)
 
-        print("AI LENGTH:", len(response.choices[0].message.content))
-        print("AI TEXT:", response.choices[0].message.content)
-        ai_text = response.choices[0].message.content.strip()
+        print("AI LENGTH:", len(response_text))
+        print("AI TEXT:", response_text)
+
+        ai_text = response_text.strip()
 
         save_chat(
             owner_key,
