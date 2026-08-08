@@ -280,7 +280,7 @@ def ai_response(message, owner_key="", history=None):
             model="google/gemini-2.5-flash",
             temperature=0.9,
             top_p=0.9,
-            max_tokens=6000,
+            max_tokens=5000,
             messages=messages
         )
 
