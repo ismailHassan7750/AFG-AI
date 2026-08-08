@@ -273,11 +273,11 @@ def ai_response(message, owner_key="", history=None):
               sum(len(str(m.get("content", ""))) for m in messages),
               "characters")
 
-        print("USING MODEL: google/gemini-2.5-flash")
+        print("USING MODEL: cognitivecomputations/dolphin-mistral-24b-venice-edition:free")
         print("KEY START:", os.getenv("OPENROUTER_API_KEY")[:10])
 
         response = client.chat.completions.create(
-            model="google/gemini-2.5-flash",
+            model="cognitivecomputations/dolphin-mistral-24b-venice-edition:free",
             temperature=0.9,
             top_p=0.9,
             max_tokens=4000,
@@ -373,7 +373,7 @@ def image_ai():
     try:
 
         response = client.chat.completions.create(
-        model="google/gemini-2.5-flash",
+        model="cognitivecomputations/dolphin-mistral-24b-venice-edition:free",
         messages=[
             {
                 "role":"user",
